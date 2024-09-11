@@ -1,8 +1,8 @@
 # ID to UID
 
-This Proof-Of-Concept tests an ID to UID mapper to alleviate the security issue
+This Proof-Of-Concept tests an ID to UID mapper to mitigate the security issue
 of working with sequential IDs, without adding a new index to retrieve elements
-from the database and benefit from optimized index on sequential columns.
+from the database and benefit from the optimized index on sequential columns.
 
 The goal is to provide a bijection to convert an ID to a string looking like a
 pseudo-generated alphanumeric string (the UID), and convert back to the

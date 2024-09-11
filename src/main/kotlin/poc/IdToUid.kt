@@ -34,21 +34,17 @@ class IdToUid(keyBytes: ByteArray) {
 
     fun toUid(id: Long): String {
         val input  = id.toByteArray()
-        val output = ByteArray(8 + 2) // +2: Add padding for Base32
+        val output = ByteArray(8)
 
         // cypher
         ciphering.processBlock(input, 0, output, 0)
 
-        // Randomize last two bytes to add more confusion
-        output[8] = RandomUtils.insecure().randomInt().toByte()
-        output[9] = RandomUtils.insecure().randomInt().toByte()
-
-        // Base 32 looks like a pseudo-random alphanumeric String
-        return Base32.toBase32String(output)
+        // Base 32 looks like a pseudo-random alphanumeric String (remove padding)
+        return Base32.toBase32String(output).substring(0, 13)
     }
 
     fun toId(uid: String): Long {
-        val input = Base32.decode(uid)
+        val input = Base32.decode("$uid===") // Add removed padding
         val output = ByteArray(Long.SIZE_BYTES)
 
         deciphering.processBlock(input, 0, output, 0)
