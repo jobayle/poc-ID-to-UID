@@ -15,10 +15,17 @@ dependencies {
     implementation("org.bouncycastle:bcprov-jdk18on:$bcVersion")
     implementation("org.bouncycastle:bcpkix-jdk18on:$bcVersion")
     implementation("org.apache.commons:commons-lang3:3.17.0")
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 application {
     mainClass = "poc.Main"
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 kotlin {

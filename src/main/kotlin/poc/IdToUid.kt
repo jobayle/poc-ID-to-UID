@@ -18,25 +18,21 @@ private fun ByteArray.toLong(): Long {
 }
 
 /**
- * Using BlowFish because:
- *  * 64bits blocks (single Long)
- *  * Faster than other symmetric block based algorithms (DES, 3DES)
- *
- * Average cipher/decipher time is 28µs on my computer (Intel i7-12700H @ 2.30 GHz)
+ * Mapper for ID (Long) to UID (String) and back.
  *
  * @param keyBytes key (size must be between 32 and 448 bits (4~56 bytes))
  */
 class IdToUid(keyBytes: ByteArray) {
 
-    val key = KeyParameter(keyBytes)
+    private val key = KeyParameter(keyBytes)
+    private val ciphering = BlowfishEngine().apply { init(true, key) }
+    private val deciphering = BlowfishEngine().apply { init(false, key) }
 
     init {
         assert(Long.SIZE_BYTES == 8) // Always true
     }
 
     fun toUid(id: Long): String {
-        val ciphering = BlowfishEngine().apply { init(true, key) }
-
         val input  = id.toByteArray()
         val output = ByteArray(8 + 2) // +2: Add padding for Base32
 
@@ -52,8 +48,6 @@ class IdToUid(keyBytes: ByteArray) {
     }
 
     fun toId(uid: String): Long {
-        val deciphering = BlowfishEngine().apply { init(false, key) }
-
         val input = Base32.decode(uid)
         val output = ByteArray(Long.SIZE_BYTES)
 
