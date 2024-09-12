@@ -20,3 +20,14 @@ following reasons:
 
 Average cipher/decipher time is less than 1µs on my computer
 (Intel i7-12700H @ 2.30 GHz)
+
+### Base32
+
+The result of the Blowfish encryption is then encoded using Base32, because
+Base32 encodes packets of 5 bytes, the resulting output is made of 13 letters
+followed by 3 equal signs for padding.
+
+The mapper also removes and add the padding so the returned UID is only made of
+13 letters.
+
+Example: `id=314 -> toUid() -> uid=3ZREIP6QC5QUS -> toId() -> restoredId=314`
