@@ -1,21 +1,8 @@
 package poc
 
-import org.apache.commons.lang3.RandomUtils
 import org.bouncycastle.crypto.engines.BlowfishEngine
 import org.bouncycastle.crypto.params.KeyParameter
 import org.bouncycastle.util.encoders.Base32
-import java.nio.ByteBuffer
-
-private fun Long.toByteArray(): ByteArray {
-    val buffer = ByteBuffer.allocate(Long.SIZE_BYTES)
-    buffer.putLong(this)
-    return buffer.array()
-}
-
-private fun ByteArray.toLong(): Long {
-    val buffer = ByteBuffer.wrap(this)
-    return buffer.getLong()
-}
 
 /**
  * Mapper for ID (Long) to UID (String) and back.
@@ -53,4 +40,3 @@ class IdToUid(keyBytes: ByteArray) {
     }
 
 }
-
