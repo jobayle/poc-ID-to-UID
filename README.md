@@ -31,3 +31,15 @@ The mapper also removes and add the padding so the returned UID is only made of
 13 letters.
 
 Example: `id=314 -> toUid() -> uid=3ZREIP6QC5QUS -> toId() -> restoredId=314`
+
+# ID to UUID
+
+Akin to the ID to UID technique described above, except we're encoding 128bits
+to produce a UUID.
+
+Technically the AES encryption scheme is used to benefit from its block size of
+128bits, then instances of UUID are created from these 128bits instead of using
+Base32.
+
+Example: `id=22 -> toUuid() -> uuid=c4231430-c5f0-da0a-17be-66ffa000ba52
+-> toId() -> restoredId=22`
